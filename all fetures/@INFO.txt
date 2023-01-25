@@ -1,0 +1,5 @@
+tast assign by fintosha company/ piyush bhai
+
+-> tabledata in jquery (in this page data fetch from database,pagination,search records and order[incresing or decresing])
+-> data insert into json file and fetch from json file.
+->
