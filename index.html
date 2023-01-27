@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+    <head>
+        <title>DataTable </title>
+        <!-- Datatable CSS -->
+        <link href='DataTables/datatables.min.css' rel='stylesheet' type='text/css'>
+
+        <!-- jQuery Library -->
+        <script src="jquery-3.3.1.min.js"></script>
+        
+        <!-- Datatable JS -->
+        <script src="DataTables/datatables.min.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+    <body >
+      <h1>DataTables AJAX Pagination with search and sort - PHP</h1>
+
+        <div >
+            <!-- Table -->
+            <table id='empTable' class='display dataTable'>
+                <thead >
+                <tr>
+                    <th>id</th>
+                    <th>fname</th>
+                    <th>lname</th>
+                    <th>mobile number</th>
+                    <th>Email</th>
+                    <th>city</th>
+                    <th>delete</th>
+                    </tr>
+                </thead>
+                
+            </table>
+        </div>
+        <div id="modal">
+            <div id="modal-form">
+              <h2>Edit Form</h2>
+              <table cellpadding="10px" width="100%">
+              </table>
+              <div id="close-btn">X</div>
+            </div>
+          </div>
+
+        <!-- Script -->
+        <script>
+        $(document).ready(function(){
+            $('#empTable').DataTable({
+                'processing': true,
+                'serverSide': true,
+                    columnDefs: [
+    { orderable: false, targets: 3 }
+  ],
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'ajaxfile.php'
+                },
+                'columns': [
+                    { data: 'stu_id' },
+                    { data: 'fname' },
+                    { data: 'lname' },
+                    { data: 'mobile' },
+                    { data: 'email' },
+                    { data: 'city' },
+                    { data: 'action' },
+                ]
+            });
+
+            // Delete record
+            $('#empTable').on('click','.deleteUser',function(){
+                var id = $(this).data('id');
+
+                if(confirm("Do you really want to delete this record ?")){
+       
+                    var element = this;
+                    // AJAX request
+                    $.ajax({
+                        url: 'ajax-delete.php',
+                        type: 'post',
+                        data: {stu_id: id},
+                        success: function(response){
+
+                            if(response == 1){
+                                alert("Record deleted.");
+
+                                // Reload DataTable
+                                location.reload(true);
+                            }else{
+                                alert("Invalid ID.");
+                            }
+                            
+                        }
+                    });
+                } 
+                
+            });
+
+        // update record
+            //Show Modal Box  
+    $('#empTable').on("click",".updateUser", function(){
+      $("#modal").show();
+      var studentId = $(this).data('id');
+
+      $.ajax({
+        url: "load-update-form.php",
+        type: "POST",
+        data: {stu_id: studentId },
+        success: function(data) {
+          $("#modal-form table").html(data);
+        }
+      })
+    });
+
+    //Hide Modal Box
+    $("#close-btn").on("click",function(){
+      $("#modal").hide();
+    });
+
+    //Save Update Form
+      $('#modal').on("click","#edit-submit", function(){
+        var stuId = $("#edit-id").val();
+        var fname = $("#edit-fname").val();
+        var lname = $("#edit-lname").val();
+        var number = $("#edit-number").val();
+        var email = $("#edit-email").val();
+        var city = $("#edit-city").val();
+
+        $.ajax({
+          url: "ajax-update-form.php",
+          type : "POST",
+          data : {id: stuId, first_name: fname, last_name: lname, number: number, email: email, city: city},
+          success: function(data) {
+            if(data == 1){
+              $("#modal").hide();
+              alert("your data updated successfully");
+              location.reload(true);
+            }
+            else{
+              alert("**update unsuccessfully**");
+            }
+          }
+        })
+      });
+
+
+    });
+        </script>
+    </body>
+
+</html>
