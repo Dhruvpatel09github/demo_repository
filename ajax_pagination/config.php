@@ -7,6 +7,7 @@ $user = "root"; /* User */
 $password = ""; /* Password */
 $dbname = "student"; /* Database name */
 
+
 $con = mysqli_connect($host, $user, $password,$dbname);
 // Check connection
 if (!$con) {
