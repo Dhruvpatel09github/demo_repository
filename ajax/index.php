@@ -3,7 +3,8 @@
  $connect = mysqli_connect('localhost', 'root', '', 'student');  
  $query = "SELECT * FROM reg ORDER BY stu_id DESC";  
  $result = mysqli_query($connect, $query);  
- ?>  
+ ?>
+   
 <!DOCTYPE html>
 <html lang="en">
 <head>
