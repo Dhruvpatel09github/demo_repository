@@ -86,6 +86,7 @@
       </td>
     </tr>
   </table>
+
   <div id="error-message"></div>
   <div id="success-message"></div>
   <div id="modal">
@@ -282,8 +283,6 @@
     // });
 
 // });
-
-
 
 
 //  //decrement
