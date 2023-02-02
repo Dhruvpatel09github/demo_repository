@@ -36,8 +36,7 @@
                                 <span id="feild3errmsg" style="color:red"></span>
                             </div>
                             </div>
-                        
-                            
+                         
                             <div class="form-group">
                                 <label>Date and time of missing <span id="require">*</span></label>                              <br/>
                                     <select name="msg_day" id="msg_day" class="input_pulldown">
